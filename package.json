@@ -2,7 +2,7 @@
   "name": "@jimzandueta/stocksjs",
   "version": "1.0.0",
   "description": "Stock indicators implemented in JS",
-  "main": "index.js",
+  "main": "./build/index.js",
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production"
