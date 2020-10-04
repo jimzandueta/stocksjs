@@ -1,5 +1,5 @@
 {
-  "name": "stocksjs",
+  "name": "@jimzandueta/stocksjs",
   "version": "1.0.0",
   "description": "Stock indicators implemented in JS",
   "main": "index.js",
@@ -15,5 +15,14 @@
     "babel-loader": "^8.1.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimzandueta/stocksjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jimzandueta/stocksjs/issues"
+  },
+  "homepage": "https://github.com/jimzandueta/stocksjs#readme"
 }
