@@ -4,6 +4,8 @@ import { getMACD } from './indicators/getMACD'
 import { getSignal } from './indicators/getSignal'
 import { getHistogram } from './indicators/getHistogram'
 import { getALMA } from './indicators/getALMA'
+import { getMACDCross } from './indicators/getMACDCross'
+import { getTrend } from './indicators/getTrend'
 
-export default { getSMA, getEMA, getMACD, getSignal, getHistogram, getALMA }
-export { getSMA, getEMA, getMACD, getSignal, getHistogram, getALMA }
+export default { getSMA, getEMA, getMACD, getSignal, getHistogram, getALMA, getMACDCross, getTrend }
+export { getSMA, getEMA, getMACD, getSignal, getHistogram, getALMA, getMACDCross, getTrend }

@@ -7,8 +7,8 @@ const getMACD = (priceHist, periods, priceKey = 'price', setKey = 'macd', option
   let slowPeriod = periods.slowPeriod ? period.slowPeriod : 26
   let signalLength = periods.signalLength ? period.signalLength : 9
 
-  let isWithEMAFast = priceHist[i].hasOwnProperty(`ema${fastPeriod}`)
-  let isWithEMASlow = priceHist[i].hasOwnProperty(`ema${slowPeriod}`)
+  let isWithEMAFast = priceHist[0].hasOwnProperty(`ema${fastPeriod}`)
+  let isWithEMASlow = priceHist[0].hasOwnProperty(`ema${slowPeriod}`)
 
   priceHist = !isWithEMAFast ? getEMA(priceHist, fastPeriod, priceKey) : priceHist
   priceHist = !isWithEMASlow ? getEMA(priceHist, slowPeriod, priceKey) : priceHist

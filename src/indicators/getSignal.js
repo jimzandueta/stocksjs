@@ -6,8 +6,8 @@ const getSignal = (priceHist, periods, priceKey = 'price', setKey = 'signal') =>
   let slowPeriod = periods.slowPeriod ? period.slowPeriod : 26
   let signalLength = periods.signalLength ? period.signalLength : 9
 
-  let isWithMACD = priceHist[i].hasOwnProperty('macd')
-  let isWithMACDSMA = priceHist[i].hasOwnProperty(`macdsma${signalLength}`)
+  let isWithMACD = priceHist[0].hasOwnProperty('macd')
+  let isWithMACDSMA = priceHist[0].hasOwnProperty(`macdsma${signalLength}`)
 
   priceHist = !isWithMACD ? getMACD(priceHist, { fastPeriod, slowPeriod }, priceKey) : priceHist
   priceHist = !isWithMACDSMA ? getSMA(priceHist, signalLength, 'macd', 'macdsma') : priceHist

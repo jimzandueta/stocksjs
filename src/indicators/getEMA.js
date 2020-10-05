@@ -3,7 +3,7 @@ import { getSMA } from './getSMA'
 const getEMA = (priceHist, period, priceKey = 'price', setKey = 'ema') => {
   let s = 2
   let k = s / (1 + period)
-  let isWithSMA = priceHist[i].hasOwnProperty(`sma${period}`)
+  let isWithSMA = priceHist[0].hasOwnProperty(`sma${period}`)
 
   priceHist = !isWithSMA ? getSMA(priceHist, period) : priceHist
 
