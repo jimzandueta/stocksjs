@@ -3,9 +3,9 @@ import { getSignal } from './getSignal'
 import { getHistogram } from './getHistogram'
 
 const getMACD = (priceHist, periods, priceKey = 'price', setKey = 'macd', options) => {
-  let fastPeriod = periods.fastPeriod ? period.fastPeriod : 12
-  let slowPeriod = periods.slowPeriod ? period.slowPeriod : 26
-  let signalLength = periods.signalLength ? period.signalLength : 9
+  let fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12
+  let slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26
+  let signalLength = periods.signalLength ? periods.signalLength : 9
 
   let isWithEMAFast = priceHist[0].hasOwnProperty(`ema${fastPeriod}`)
   let isWithEMASlow = priceHist[0].hasOwnProperty(`ema${slowPeriod}`)
