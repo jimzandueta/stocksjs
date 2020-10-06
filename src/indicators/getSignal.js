@@ -2,9 +2,9 @@ import { getSMA } from './getSMA'
 import { getMACD } from './getMACD'
 
 const getSignal = (priceHist, periods, priceKey = 'price', setKey = 'signal') => {
-  let fastPeriod = periods.fastPeriod ? period.fastPeriod : 12
-  let slowPeriod = periods.slowPeriod ? period.slowPeriod : 26
-  let signalLength = periods.signalLength ? period.signalLength : 9
+  let fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12
+  let slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26
+  let signalLength = periods.signalLength ? periods.signalLength : 9
 
   let isWithMACD = priceHist[0].hasOwnProperty('macd')
   let isWithMACDSMA = priceHist[0].hasOwnProperty(`macdsma${signalLength}`)
