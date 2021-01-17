@@ -9,7 +9,8 @@ const getMACDCross = (priceHist, periods, priceKey = 'price') => {
     includeHistogram: true
   }
 
-  priceHist = getMACD(priceHist, { fastPeriod, slowPeriod, signalLength }, priceKey, 'macd', options)
+  let isWithMACD = priceHist[0].hasOwnProperty('macd')
+  priceHist = !isWithMACD ? getMACD(priceHist, { fastPeriod, slowPeriod, signalLength }, priceKey, 'macd', options) : priceHist
   
   let arr = []
   let cIdx = 0
@@ -22,6 +23,7 @@ const getMACDCross = (priceHist, periods, priceKey = 'price') => {
       arr.push(priceHist[i - cIdx - 1])
       cIdx = i
     }
+    if (!isWithMACD) delete priceHist[i]['macd']
   }
   return arr
 }

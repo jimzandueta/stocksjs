@@ -8,17 +8,17 @@ const getRSI = (priceHist, period = 14, changeKey = 'change', setKey = 'rsi') =>
     let gCur = null
     let lCur = null
 
-    if (i <= priceHist.length - period) {
+    if (i <= priceHist.length - 1 - period) {
       for (let j = i; j < i + period; j++) {
         let change = parseFloat(priceHist[j][changeKey])
         change >= 0 ? gArr.push(change) : gArr.push(0)
         change < 0 ? lArr.push(Math.abs(change)) : lArr.push(0)
       }
     }
-    if (i === priceHist.length - period) {
+    if (i === priceHist.length - 1 - period) {
       gAve = gArr.reduce((sum, g) => sum + g) / gArr.length
       lAve = lArr.reduce((sum, l) => sum + l) / lArr.length
-    } else if (i < priceHist.length - period) {
+    } else if (i < priceHist.length - 1 - period) {
       gCur = gArr.slice(0, 1)[0]
       lCur = lArr.slice(0, 1)[0]
       gAve = ((priceHist[i + 1]['gAve'] * (period - 1)) + gCur) / period

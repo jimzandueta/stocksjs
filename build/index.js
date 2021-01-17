@@ -1,1 +1,268 @@
-!function(e,t){if("object"==typeof exports&&"object"==typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var n=t();for(var r in n)("object"==typeof exports?exports:e)[r]=n[r]}}(global,(function(){return function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=0)}([function(e,t,n){"use strict";n.r(t),n.d(t,"getSMA",(function(){return r})),n.d(t,"getEMA",(function(){return o})),n.d(t,"getMACD",(function(){return l})),n.d(t,"getSignal",(function(){return a})),n.d(t,"getHistogram",(function(){return i})),n.d(t,"getALMA",(function(){return c})),n.d(t,"getMACDCross",(function(){return s})),n.d(t,"getTrend",(function(){return d})),n.d(t,"getRSI",(function(){return g})),n.d(t,"getRSICross",(function(){return u}));var r=function(e,t){for(var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"price",r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"sma",o=0;o<e.length;o++)if(o<e.length-t+1){for(var a=0,i=o;i<o+t;i++)a+=parseFloat(e[i][n]);e[o]["".concat(r).concat(t)]=(a/t).toFixed(6)}else e[o]["".concat(r).concat(t)]=(0).toFixed(6);return e},o=function(e,t){for(var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"price",o=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"ema",a=2,i=a/(1+t),l=e[0].hasOwnProperty("sma".concat(t)),c=(e=l?e:r(e,t)).length-1;c>=0;c--)c===e.length-t?e[c]["".concat(o).concat(t)]=e[c]["sma".concat(t)]:c<e.length-t?e[c]["".concat(o).concat(t)]=(parseFloat(e[c][n]*i)+parseFloat(e[c+1]["".concat(o).concat(t)]*(1-i))).toFixed(6):e[c]["".concat(o).concat(t)]=(0).toFixed(6),l||delete e[c]["sma".concat(t)];return e},a=function(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"price",o=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"signal",a=t.fastPeriod?t.fastPeriod:12,i=t.slowPeriod?t.slowPeriod:26,c=t.signalLength?t.signalLength:9,s=e[0].hasOwnProperty("macd"),d=e[0].hasOwnProperty("macdsma".concat(c));e=s?e:l(e,{fastPeriod:a,slowPeriod:i},n);for(var g=2,u=g/(1+c),f=(e=d?e:r(e,c,"macd","macdsma")).length-1;f>=0;f--)f===e.length-c-i-1?e[f][o]=e[f]["macdsma".concat(c)]:f<e.length-c-i-1?e[f][o]=(parseFloat(e[f].macd*u)+parseFloat(e[f+1][o]*(1-u))).toFixed(6):e[f][o]=(0).toFixed(6),s||delete e[f].macd,d||delete e[f]["macdsma".concat(c)];return e},i=function(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"price",r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"histogram",o=t.fastPeriod?t.fastPeriod:12,i=t.slowPeriod?t.slowPeriod:26,c=t.signalLength?t.signalLength:9,s=e[0].hasOwnProperty("macd"),d=e[0].hasOwnProperty("signal");e=s?e:l(e,{fastPeriod:o,slowPeriod:i},n),e=d?e:a(e,{fastPeriod:o,slowPeriod:i,signalLength:c},n);for(var g=0;g<e.length;g++)e[g][r]=(parseFloat(e[g].macd)-parseFloat(e[g].signal)).toFixed(6);return e},l=function(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"price",r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"macd",l=arguments.length>4?arguments[4]:void 0,c=t.fastPeriod?t.fastPeriod:12,s=t.slowPeriod?t.slowPeriod:26,d=t.signalLength?t.signalLength:9,g=e[0].hasOwnProperty("ema".concat(c)),u=e[0].hasOwnProperty("ema".concat(s));e=g?e:o(e,c,n),e=u?e:o(e,s,n);for(var f=0;f<e.length;f++)f<e.length-s-1?e[f][r]=parseFloat(e[f]["ema".concat(c)]-e[f]["ema".concat(s)]).toFixed(6):e[f][r]=(0).toFixed(6),g||delete e[f]["ema".concat(c)],u||delete e[f]["ema".concat(s)];return e=l.includeSignal?a(e,{fastPeriod:c,slowPeriod:s,signalLength:d},n):e,e=l.includeHistogram?i(e,{fastPeriod:c,slowPeriod:s,signalLength:d},n):e},c=function(e){for(var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:9,n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:6,r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:.85,o=arguments.length>4&&void 0!==arguments[4]?arguments[4]:"price",a=t+1,i=Math.floor(r*t),l=t/n,c=0;c<e.length;c++){var s=0,d=0;if(c+t<e.length){for(var g=c;g<c+a;g++){var u=g-c,f=Math.exp(-(u-i)*(u-i)/(2*l*l));s+=parseFloat(e[c+a-1-u][o])*f,d+=f}e[c].alma=(s/d).toFixed(4)}else e[c].alma=(0).toFixed(4)}return e},s=function(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"price",r=t.fastPeriod?t.fastPeriod:12,o=t.slowPeriod?t.slowPeriod:26,a=t.signalLength?t.signalLength:9,i={includeSignal:!0,includeHistogram:!0};e=l(e,{fastPeriod:r,slowPeriod:o,signalLength:a},n,"macd",i);for(var c=[],s=0,d=0;d<e.length;d++){var g=parseFloat(e[s].macd)>parseFloat(e[s].signal),u=parseFloat(e[d].macd)>parseFloat(e[d].signal);!g!=!u&&(e[d-s-1].days=d-s-1,c.push(e[d-s-1]),s=d)}return c},d=function(e,t){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,r=arguments.length>3?arguments[3]:void 0,o=arguments.length>4&&void 0!==arguments[4]&&arguments[4],a={increasing:[],decreasing:[],equals:[]},i=e.slice(n,r).reverse();return i.map((function(e,n,r){if(n>0){var i=parseFloat(e[t]-r[n-1][t]);0===(i=o?Math.abs(i):i)?a.equals.push(i):i>0?a.increasing.push(i):a.decreasing.push(i)}return e})),a.increasing.length>a.decreasing.length+a.equals.length?1:a.decreasing.length>a.increasing.length+a.equals.length?-1:(a.equals.length,a.increasing.length,a.decreasing.length,0)},g=function(e){for(var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:14,n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"change",r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"rsi",o=e.length-1;o>=0;o--){var a=[],i=[],l=null,c=null,s=null,d=null;if(o<=e.length-t)for(var g=o;g<o+t;g++){var u=parseFloat(e[g][n]);u>=0?a.push(u):a.push(0),u<0?i.push(Math.abs(u)):i.push(0)}o===e.length-t?(l=a.reduce((function(e,t){return e+t}))/a.length,c=i.reduce((function(e,t){return e+t}))/i.length):o<e.length-t?(s=a.slice(0,1)[0],d=i.slice(0,1)[0],l=(e[o+1].gAve*(t-1)+s)/t,c=(e[o+1].lAve*(t-1)+d)/t,delete e[o+1].gAve,delete e[o+1].lAve):(e[o].gAve=0,e[o].lAve=0,e[o]["".concat(r).concat(t)]=(0).toFixed(2)),e[o].gAve=l,e[o].lAve=c,e[o]["".concat(r).concat(t)]=(100-100/(1+l/c)).toFixed(4)}return e},u=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:14,n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"change",r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:[50,55],o=e[0].hasOwnProperty("rsi".concat(t));e=o?e:g(e,t,n);for(var a=[],i=0,l=0;l<e.length;l++){var c=parseFloat(e[i]["rsi".concat(t)])>=r[1],s=parseFloat(e[i]["rsi".concat(t)])>=r[0]&&parseFloat(e[i]["rsi".concat(t)])<r[1],d=parseFloat(e[i]["rsi".concat(t)])<r[0],u=parseFloat(e[l]["rsi".concat(t)])>=r[1],f=parseFloat(e[l]["rsi".concat(t)])>=r[0]&&parseFloat(e[l]["rsi".concat(t)])<r[1],h=parseFloat(e[l]["rsi".concat(t)])<r[0];c&&(f||h)||s&&h?(e[i].days=i,a.push(e[i]),i=l):(d&&(h||f||u)||s&&(f||u)||c&&u)&&(i=l),o||delete e[l]["rsi".concat(t)]}return a};t.default={getSMA:r,getEMA:o,getMACD:l,getSignal:a,getHistogram:i,getALMA:c,getMACDCross:s,getTrend:d,getRSI:g,getRSICross:u}}])}));
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(global, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/*! exports provided: default, getSMA, getEMA, getMACD, getSignal, getHistogram, getALMA, getMACDCross, getRSI, getRSICross, getTP, getCCI, getCCICross, getTrend */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _indicators_getSMA__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./indicators/getSMA */ \"./src/indicators/getSMA.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getSMA\", function() { return _indicators_getSMA__WEBPACK_IMPORTED_MODULE_0__[\"getSMA\"]; });\n\n/* harmony import */ var _indicators_getEMA__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./indicators/getEMA */ \"./src/indicators/getEMA.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getEMA\", function() { return _indicators_getEMA__WEBPACK_IMPORTED_MODULE_1__[\"getEMA\"]; });\n\n/* harmony import */ var _indicators_getMACD__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./indicators/getMACD */ \"./src/indicators/getMACD.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getMACD\", function() { return _indicators_getMACD__WEBPACK_IMPORTED_MODULE_2__[\"getMACD\"]; });\n\n/* harmony import */ var _indicators_getSignal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./indicators/getSignal */ \"./src/indicators/getSignal.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getSignal\", function() { return _indicators_getSignal__WEBPACK_IMPORTED_MODULE_3__[\"getSignal\"]; });\n\n/* harmony import */ var _indicators_getHistogram__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./indicators/getHistogram */ \"./src/indicators/getHistogram.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getHistogram\", function() { return _indicators_getHistogram__WEBPACK_IMPORTED_MODULE_4__[\"getHistogram\"]; });\n\n/* harmony import */ var _indicators_getALMA__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./indicators/getALMA */ \"./src/indicators/getALMA.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getALMA\", function() { return _indicators_getALMA__WEBPACK_IMPORTED_MODULE_5__[\"getALMA\"]; });\n\n/* harmony import */ var _indicators_getMACDCross__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./indicators/getMACDCross */ \"./src/indicators/getMACDCross.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getMACDCross\", function() { return _indicators_getMACDCross__WEBPACK_IMPORTED_MODULE_6__[\"getMACDCross\"]; });\n\n/* harmony import */ var _indicators_getTrend__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./indicators/getTrend */ \"./src/indicators/getTrend.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getTrend\", function() { return _indicators_getTrend__WEBPACK_IMPORTED_MODULE_7__[\"getTrend\"]; });\n\n/* harmony import */ var _indicators_getRSI__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./indicators/getRSI */ \"./src/indicators/getRSI.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getRSI\", function() { return _indicators_getRSI__WEBPACK_IMPORTED_MODULE_8__[\"getRSI\"]; });\n\n/* harmony import */ var _indicators_getRSICross__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./indicators/getRSICross */ \"./src/indicators/getRSICross.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getRSICross\", function() { return _indicators_getRSICross__WEBPACK_IMPORTED_MODULE_9__[\"getRSICross\"]; });\n\n/* harmony import */ var _indicators_getTP__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./indicators/getTP */ \"./src/indicators/getTP.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getTP\", function() { return _indicators_getTP__WEBPACK_IMPORTED_MODULE_10__[\"getTP\"]; });\n\n/* harmony import */ var _indicators_getCCI__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./indicators/getCCI */ \"./src/indicators/getCCI.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getCCI\", function() { return _indicators_getCCI__WEBPACK_IMPORTED_MODULE_11__[\"getCCI\"]; });\n\n/* harmony import */ var _indicators_getCCICross__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./indicators/getCCICross */ \"./src/indicators/getCCICross.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getCCICross\", function() { return _indicators_getCCICross__WEBPACK_IMPORTED_MODULE_12__[\"getCCICross\"]; });\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  getSMA: _indicators_getSMA__WEBPACK_IMPORTED_MODULE_0__[\"getSMA\"],\n  getEMA: _indicators_getEMA__WEBPACK_IMPORTED_MODULE_1__[\"getEMA\"],\n  getMACD: _indicators_getMACD__WEBPACK_IMPORTED_MODULE_2__[\"getMACD\"],\n  getSignal: _indicators_getSignal__WEBPACK_IMPORTED_MODULE_3__[\"getSignal\"],\n  getHistogram: _indicators_getHistogram__WEBPACK_IMPORTED_MODULE_4__[\"getHistogram\"],\n  getALMA: _indicators_getALMA__WEBPACK_IMPORTED_MODULE_5__[\"getALMA\"],\n  getMACDCross: _indicators_getMACDCross__WEBPACK_IMPORTED_MODULE_6__[\"getMACDCross\"],\n  getRSI: _indicators_getRSI__WEBPACK_IMPORTED_MODULE_8__[\"getRSI\"],\n  getRSICross: _indicators_getRSICross__WEBPACK_IMPORTED_MODULE_9__[\"getRSICross\"],\n  getTP: _indicators_getTP__WEBPACK_IMPORTED_MODULE_10__[\"getTP\"],\n  getCCI: _indicators_getCCI__WEBPACK_IMPORTED_MODULE_11__[\"getCCI\"],\n  getCCICross: _indicators_getCCICross__WEBPACK_IMPORTED_MODULE_12__[\"getCCICross\"],\n  getTrend: _indicators_getTrend__WEBPACK_IMPORTED_MODULE_7__[\"getTrend\"]\n});\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getALMA.js":
+/*!***********************************!*\
+  !*** ./src/indicators/getALMA.js ***!
+  \***********************************/
+/*! exports provided: getALMA */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getALMA\", function() { return getALMA; });\nvar getALMA = function getALMA(priceHist) {\n  var period = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 9;\n  var sigma = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 6.0;\n  var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0.85;\n  var keyPrice = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'price';\n  var window = period + 1;\n  var m = Math.floor(offset * period);\n  var s = period / sigma;\n\n  for (var i = 0; i < priceHist.length; i++) {\n    var cSum = 0.0;\n    var norm = 0.0;\n\n    if (i + period < priceHist.length) {\n      for (var j = i; j < i + window; j++) {\n        var jj = j - i;\n        var coeff = Math.exp(-((jj - m) * (jj - m)) / (2 * s * s));\n        cSum += parseFloat(priceHist[i + window - 1 - jj][keyPrice]) * coeff;\n        norm += coeff;\n      }\n\n      priceHist[i].alma = (cSum / norm).toFixed(4);\n    } else {\n      priceHist[i].alma = 0 .toFixed(4);\n    }\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getALMA.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getCCI.js":
+/*!**********************************!*\
+  !*** ./src/indicators/getCCI.js ***!
+  \**********************************/
+/*! exports provided: getCCI */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCCI\", function() { return getCCI; });\n/* harmony import */ var _getTP__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getTP */ \"./src/indicators/getTP.js\");\n/* harmony import */ var _getSMA__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getSMA */ \"./src/indicators/getSMA.js\");\n\n\n\nvar getCCI = function getCCI(priceHist) {\n  var period = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;\n  var constant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.015;\n  var priceKeys = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : ['price', 'high', 'low'];\n  var setKey = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'cci';\n  priceHist = Object(_getTP__WEBPACK_IMPORTED_MODULE_0__[\"getTP\"])(priceHist, priceKeys);\n  priceHist = Object(_getSMA__WEBPACK_IMPORTED_MODULE_1__[\"getSMA\"])(priceHist, period, 'tp', 'smatp');\n\n  for (var i = priceHist.length - 1; i >= 0; i--) {\n    if (i <= priceHist.length - period) {\n      var mdSum = 0.0;\n\n      for (var j = i; j < i + period; j++) {\n        mdSum += Math.abs(parseFloat(priceHist[j]['tp']) - parseFloat(priceHist[i][\"smatp\".concat(period)]));\n      }\n\n      var md = mdSum / period;\n      priceHist[i][setKey] = ((parseFloat(priceHist[i]['tp']) - parseFloat(priceHist[i][\"smatp\".concat(period)])) / (constant * md)).toFixed(4);\n    } else {\n      priceHist[i][setKey] = 0 .toFixed(4);\n    }\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getCCI.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getCCICross.js":
+/*!***************************************!*\
+  !*** ./src/indicators/getCCICross.js ***!
+  \***************************************/
+/*! exports provided: getCCICross */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getCCICross\", function() { return getCCICross; });\n/* harmony import */ var _getCCI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getCCI */ \"./src/indicators/getCCI.js\");\n\n\nvar getCCICross = function getCCICross(priceHist) {\n  var period = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;\n  var constant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.015;\n  var priceKeys = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : ['price', 'high', 'low'];\n  var limit = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 100;\n  var isWithCCI = priceHist[0].hasOwnProperty('cci');\n  priceHist = !isWithCCI ? Object(_getCCI__WEBPACK_IMPORTED_MODULE_0__[\"getCCI\"])(priceHist, period, constant, priceKeys) : priceHist;\n  var arr = [];\n  var cIdx = 0;\n\n  for (var i = 0; i < priceHist.length; i++) {\n    var a = parseFloat(priceHist[cIdx]['cci']) >= limit;\n    var b = parseFloat(priceHist[cIdx]['cci']) < limit;\n    var c = parseFloat(priceHist[i]['cci']) >= limit;\n    var d = parseFloat(priceHist[i]['cci']) < limit;\n\n    if (a && d) {\n      priceHist[cIdx]['days'] = cIdx;\n      arr.push(priceHist[cIdx]);\n      cIdx = i;\n    } else {\n      cIdx = i;\n    }\n\n    if (!isWithCCI) delete priceHist[i]['cci'];\n  }\n\n  return arr;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getCCICross.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getEMA.js":
+/*!**********************************!*\
+  !*** ./src/indicators/getEMA.js ***!
+  \**********************************/
+/*! exports provided: getEMA */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getEMA\", function() { return getEMA; });\n/* harmony import */ var _getSMA__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getSMA */ \"./src/indicators/getSMA.js\");\n\n\nvar getEMA = function getEMA(priceHist, period) {\n  var priceKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'price';\n  var setKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'ema';\n  var s = 2;\n  var k = s / (1 + period);\n  var isWithSMA = priceHist[0].hasOwnProperty(\"sma\".concat(period));\n  priceHist = !isWithSMA ? Object(_getSMA__WEBPACK_IMPORTED_MODULE_0__[\"getSMA\"])(priceHist, period) : priceHist;\n\n  for (var i = priceHist.length - 1; i >= 0; i--) {\n    if (i === priceHist.length - period) {\n      priceHist[i][\"\".concat(setKey).concat(period)] = priceHist[i][\"sma\".concat(period)];\n    } else if (i < priceHist.length - period) {\n      priceHist[i][\"\".concat(setKey).concat(period)] = (parseFloat(priceHist[i][priceKey] * k) + parseFloat(priceHist[i + 1][\"\".concat(setKey).concat(period)] * (1 - k))).toFixed(6);\n    } else {\n      priceHist[i][\"\".concat(setKey).concat(period)] = 0 .toFixed(6);\n    }\n\n    if (!isWithSMA) delete priceHist[i][\"sma\".concat(period)];\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getEMA.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getHistogram.js":
+/*!****************************************!*\
+  !*** ./src/indicators/getHistogram.js ***!
+  \****************************************/
+/*! exports provided: getHistogram */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getHistogram\", function() { return getHistogram; });\n/* harmony import */ var _getMACD__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getMACD */ \"./src/indicators/getMACD.js\");\n/* harmony import */ var _getSignal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getSignal */ \"./src/indicators/getSignal.js\");\n\n\n\nvar getHistogram = function getHistogram(priceHist, periods) {\n  var priceKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'price';\n  var setKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'histogram';\n  var fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12;\n  var slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26;\n  var signalLength = periods.signalLength ? periods.signalLength : 9;\n  var isWithMACD = priceHist[0].hasOwnProperty('macd');\n  var isWithSignal = priceHist[0].hasOwnProperty('signal');\n  priceHist = !isWithMACD ? Object(_getMACD__WEBPACK_IMPORTED_MODULE_0__[\"getMACD\"])(priceHist, {\n    fastPeriod: fastPeriod,\n    slowPeriod: slowPeriod\n  }, priceKey) : priceHist;\n  priceHist = !isWithSignal ? Object(_getSignal__WEBPACK_IMPORTED_MODULE_1__[\"getSignal\"])(priceHist, {\n    fastPeriod: fastPeriod,\n    slowPeriod: slowPeriod,\n    signalLength: signalLength\n  }, priceKey) : priceHist;\n\n  for (var i = 0; i < priceHist.length; i++) {\n    priceHist[i][setKey] = (parseFloat(priceHist[i].macd) - parseFloat(priceHist[i].signal)).toFixed(6);\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getHistogram.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getMACD.js":
+/*!***********************************!*\
+  !*** ./src/indicators/getMACD.js ***!
+  \***********************************/
+/*! exports provided: getMACD */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMACD\", function() { return getMACD; });\n/* harmony import */ var _getEMA__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getEMA */ \"./src/indicators/getEMA.js\");\n/* harmony import */ var _getSignal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getSignal */ \"./src/indicators/getSignal.js\");\n/* harmony import */ var _getHistogram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getHistogram */ \"./src/indicators/getHistogram.js\");\n\n\n\n\nvar getMACD = function getMACD(priceHist, periods) {\n  var priceKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'price';\n  var setKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'macd';\n  var options = arguments.length > 4 ? arguments[4] : undefined;\n  var fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12;\n  var slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26;\n  var signalLength = periods.signalLength ? periods.signalLength : 9;\n  var isWithEMAFast = priceHist[0].hasOwnProperty(\"ema\".concat(fastPeriod));\n  var isWithEMASlow = priceHist[0].hasOwnProperty(\"ema\".concat(slowPeriod));\n  priceHist = !isWithEMAFast ? Object(_getEMA__WEBPACK_IMPORTED_MODULE_0__[\"getEMA\"])(priceHist, fastPeriod, priceKey) : priceHist;\n  priceHist = !isWithEMASlow ? Object(_getEMA__WEBPACK_IMPORTED_MODULE_0__[\"getEMA\"])(priceHist, slowPeriod, priceKey) : priceHist;\n\n  for (var i = 0; i < priceHist.length; i++) {\n    if (i < priceHist.length - slowPeriod - 1) {\n      priceHist[i][setKey] = parseFloat(priceHist[i][\"ema\".concat(fastPeriod)] - priceHist[i][\"ema\".concat(slowPeriod)]).toFixed(6);\n    } else {\n      priceHist[i][setKey] = 0 .toFixed(6);\n    }\n\n    if (!isWithEMAFast) delete priceHist[i][\"ema\".concat(fastPeriod)];\n    if (!isWithEMASlow) delete priceHist[i][\"ema\".concat(slowPeriod)];\n  }\n\n  priceHist = options.includeSignal ? Object(_getSignal__WEBPACK_IMPORTED_MODULE_1__[\"getSignal\"])(priceHist, {\n    fastPeriod: fastPeriod,\n    slowPeriod: slowPeriod,\n    signalLength: signalLength\n  }, priceKey) : priceHist;\n  priceHist = options.includeHistogram ? Object(_getHistogram__WEBPACK_IMPORTED_MODULE_2__[\"getHistogram\"])(priceHist, {\n    fastPeriod: fastPeriod,\n    slowPeriod: slowPeriod,\n    signalLength: signalLength\n  }, priceKey) : priceHist;\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getMACD.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getMACDCross.js":
+/*!****************************************!*\
+  !*** ./src/indicators/getMACDCross.js ***!
+  \****************************************/
+/*! exports provided: getMACDCross */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getMACDCross\", function() { return getMACDCross; });\n/* harmony import */ var _getMACD__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getMACD */ \"./src/indicators/getMACD.js\");\n\n\nvar getMACDCross = function getMACDCross(priceHist, periods) {\n  var priceKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'price';\n  var fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12;\n  var slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26;\n  var signalLength = periods.signalLength ? periods.signalLength : 9;\n  var options = {\n    includeSignal: true,\n    includeHistogram: true\n  };\n  var isWithMACD = priceHist[0].hasOwnProperty('macd');\n  priceHist = !isWithMACD ? Object(_getMACD__WEBPACK_IMPORTED_MODULE_0__[\"getMACD\"])(priceHist, {\n    fastPeriod: fastPeriod,\n    slowPeriod: slowPeriod,\n    signalLength: signalLength\n  }, priceKey, 'macd', options) : priceHist;\n  var arr = [];\n  var cIdx = 0;\n\n  for (var i = 0; i < priceHist.length; i++) {\n    var a = parseFloat(priceHist[cIdx].macd) > parseFloat(priceHist[cIdx].signal);\n    var b = parseFloat(priceHist[i].macd) > parseFloat(priceHist[i].signal);\n\n    if (!a != !b) {\n      priceHist[i - cIdx - 1]['days'] = i - cIdx - 1;\n      arr.push(priceHist[i - cIdx - 1]);\n      cIdx = i;\n    }\n\n    if (!isWithMACD) delete priceHist[i]['macd'];\n  }\n\n  return arr;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getMACDCross.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getRSI.js":
+/*!**********************************!*\
+  !*** ./src/indicators/getRSI.js ***!
+  \**********************************/
+/*! exports provided: getRSI */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getRSI\", function() { return getRSI; });\nvar getRSI = function getRSI(priceHist) {\n  var period = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 14;\n  var changeKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'change';\n  var setKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'rsi';\n\n  for (var i = priceHist.length - 1; i >= 0; i--) {\n    var gArr = [];\n    var lArr = [];\n    var gAve = null;\n    var lAve = null;\n    var gCur = null;\n    var lCur = null;\n\n    if (i <= priceHist.length - 1 - period) {\n      for (var j = i; j < i + period; j++) {\n        var change = parseFloat(priceHist[j][changeKey]);\n        change >= 0 ? gArr.push(change) : gArr.push(0);\n        change < 0 ? lArr.push(Math.abs(change)) : lArr.push(0);\n      }\n    }\n\n    if (i === priceHist.length - 1 - period) {\n      gAve = gArr.reduce(function (sum, g) {\n        return sum + g;\n      }) / gArr.length;\n      lAve = lArr.reduce(function (sum, l) {\n        return sum + l;\n      }) / lArr.length;\n    } else if (i < priceHist.length - 1 - period) {\n      gCur = gArr.slice(0, 1)[0];\n      lCur = lArr.slice(0, 1)[0];\n      gAve = (priceHist[i + 1]['gAve'] * (period - 1) + gCur) / period;\n      lAve = (priceHist[i + 1]['lAve'] * (period - 1) + lCur) / period;\n      delete priceHist[i + 1]['gAve'];\n      delete priceHist[i + 1]['lAve'];\n    } else {\n      priceHist[i]['gAve'] = 0;\n      priceHist[i]['lAve'] = 0;\n      priceHist[i][\"\".concat(setKey).concat(period)] = 0 .toFixed(2);\n    }\n\n    priceHist[i]['gAve'] = gAve;\n    priceHist[i]['lAve'] = lAve;\n    priceHist[i][\"\".concat(setKey).concat(period)] = (100 - 100 / (1 + gAve / lAve)).toFixed(4);\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getRSI.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getRSICross.js":
+/*!***************************************!*\
+  !*** ./src/indicators/getRSICross.js ***!
+  \***************************************/
+/*! exports provided: getRSICross */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getRSICross\", function() { return getRSICross; });\n/* harmony import */ var _getRSI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getRSI */ \"./src/indicators/getRSI.js\");\n\n\nvar getRSICross = function getRSICross(priceHist) {\n  var period = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 14;\n  var changeKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'change';\n  var limits = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [50, 55];\n  var isWithRSI = priceHist[0].hasOwnProperty(\"rsi\".concat(period));\n  priceHist = !isWithRSI ? Object(_getRSI__WEBPACK_IMPORTED_MODULE_0__[\"getRSI\"])(priceHist, period, changeKey) : priceHist;\n  var arr = [];\n  var cIdx = 0;\n\n  for (var i = 0; i < priceHist.length; i++) {\n    var a = parseFloat(priceHist[cIdx][\"rsi\".concat(period)]) >= limits[1];\n    var b = parseFloat(priceHist[cIdx][\"rsi\".concat(period)]) >= limits[0] && parseFloat(priceHist[cIdx][\"rsi\".concat(period)]) < limits[1];\n    var c = parseFloat(priceHist[cIdx][\"rsi\".concat(period)]) < limits[0];\n    var d = parseFloat(priceHist[i][\"rsi\".concat(period)]) >= limits[1];\n    var e = parseFloat(priceHist[i][\"rsi\".concat(period)]) >= limits[0] && parseFloat(priceHist[i][\"rsi\".concat(period)]) < limits[1];\n    var f = parseFloat(priceHist[i][\"rsi\".concat(period)]) < limits[0];\n\n    if (a && (e || f) || b && f) {\n      priceHist[cIdx]['days'] = cIdx;\n      arr.push(priceHist[cIdx]);\n      cIdx = i;\n    } else if (c && (f || e || d) || b && (e || d) || a && d) {\n      cIdx = i;\n    }\n\n    if (!isWithRSI) delete priceHist[i][\"rsi\".concat(period)];\n  }\n\n  return arr;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getRSICross.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getSMA.js":
+/*!**********************************!*\
+  !*** ./src/indicators/getSMA.js ***!
+  \**********************************/
+/*! exports provided: getSMA */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSMA\", function() { return getSMA; });\nvar getSMA = function getSMA(priceHist, period) {\n  var priceKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'price';\n  var setKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'sma';\n\n  for (var i = 0; i < priceHist.length; i++) {\n    if (i < priceHist.length - period + 1) {\n      var tt = 0;\n\n      for (var j = i; j < i + period; j++) {\n        tt += parseFloat(priceHist[j][priceKey]);\n      }\n\n      priceHist[i][\"\".concat(setKey).concat(period)] = (tt / period).toFixed(6);\n    } else {\n      priceHist[i][\"\".concat(setKey).concat(period)] = 0 .toFixed(6);\n    }\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getSMA.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getSignal.js":
+/*!*************************************!*\
+  !*** ./src/indicators/getSignal.js ***!
+  \*************************************/
+/*! exports provided: getSignal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSignal\", function() { return getSignal; });\n/* harmony import */ var _getSMA__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getSMA */ \"./src/indicators/getSMA.js\");\n/* harmony import */ var _getMACD__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./getMACD */ \"./src/indicators/getMACD.js\");\n\n\n\nvar getSignal = function getSignal(priceHist, periods) {\n  var priceKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'price';\n  var setKey = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'signal';\n  var fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12;\n  var slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26;\n  var signalLength = periods.signalLength ? periods.signalLength : 9;\n  var isWithMACD = priceHist[0].hasOwnProperty('macd');\n  var isWithMACDSMA = priceHist[0].hasOwnProperty(\"macdsma\".concat(signalLength));\n  priceHist = !isWithMACD ? Object(_getMACD__WEBPACK_IMPORTED_MODULE_1__[\"getMACD\"])(priceHist, {\n    fastPeriod: fastPeriod,\n    slowPeriod: slowPeriod\n  }, priceKey) : priceHist;\n  priceHist = !isWithMACDSMA ? Object(_getSMA__WEBPACK_IMPORTED_MODULE_0__[\"getSMA\"])(priceHist, signalLength, 'macd', 'macdsma') : priceHist;\n  var s = 2;\n  var k = s / (1 + signalLength);\n\n  for (var i = priceHist.length - 1; i >= 0; i--) {\n    if (i === priceHist.length - signalLength - slowPeriod - 1) {\n      priceHist[i][setKey] = priceHist[i][\"macdsma\".concat(signalLength)];\n    } else if (i < priceHist.length - signalLength - slowPeriod - 1) {\n      priceHist[i][setKey] = (parseFloat(priceHist[i].macd * k) + parseFloat(priceHist[i + 1][setKey] * (1 - k))).toFixed(6);\n    } else {\n      priceHist[i][setKey] = 0 .toFixed(6);\n    }\n\n    if (!isWithMACD) delete priceHist[i]['macd'];\n    if (!isWithMACDSMA) delete priceHist[i][\"macdsma\".concat(signalLength)];\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getSignal.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getTP.js":
+/*!*********************************!*\
+  !*** ./src/indicators/getTP.js ***!
+  \*********************************/
+/*! exports provided: getTP */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getTP\", function() { return getTP; });\nvar getTP = function getTP(priceHist) {\n  var priceKeys = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['price', 'high', 'low'];\n  var setKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'tp';\n\n  for (var i = 0; i < priceHist.length; i++) {\n    var sum = parseFloat(priceHist[i][priceKeys[0]]) + parseFloat(priceHist[i][priceKeys[1]]) + parseFloat(priceHist[i][priceKeys[2]]);\n    priceHist[i][setKey] = (sum / priceKeys.length).toFixed(6);\n  }\n\n  return priceHist;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getTP.js?");
+
+/***/ }),
+
+/***/ "./src/indicators/getTrend.js":
+/*!************************************!*\
+  !*** ./src/indicators/getTrend.js ***!
+  \************************************/
+/*! exports provided: getTrend */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getTrend\", function() { return getTrend; });\nvar getTrend = function getTrend(priceHist, key) {\n  var start = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;\n  var end = arguments.length > 3 ? arguments[3] : undefined;\n  var isVector = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;\n  var diff = {\n    increasing: [],\n    decreasing: [],\n    equals: []\n  };\n  var arr = priceHist.slice(start, end).reverse();\n  arr.map(function (item, index, array) {\n    if (index > 0) {\n      var difference = parseFloat(item[key] - array[index - 1][key]);\n      difference = isVector ? Math.abs(difference) : difference;\n      if (difference === 0) diff.equals.push(difference);else if (difference > 0) diff.increasing.push(difference);else diff.decreasing.push(difference);\n    }\n\n    return item;\n  });\n  if (diff.increasing.length > diff.decreasing.length + diff.equals.length) return 1;\n  if (diff.decreasing.length > diff.increasing.length + diff.equals.length) return -1;\n  if (diff.equals.length > diff.increasing.length + diff.decreasing.length) return 0;\n  return 0;\n};\n\n\n\n//# sourceURL=webpack:///./src/indicators/getTrend.js?");
+
+/***/ })
+
+/******/ });
+});

@@ -1,5 +1,4 @@
 import { getRSI } from './getRSI'
-import { getTrend } from './getTrend'
 
 const getRSICross = (priceHist, period = 14, changeKey = 'change', limits = [50, 55]) => {
   let isWithRSI = priceHist[0].hasOwnProperty(`rsi${period}`)
