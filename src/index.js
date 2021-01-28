@@ -4,6 +4,7 @@ import { getMACD } from './indicators/getMACD'
 import { getSignal } from './indicators/getSignal'
 import { getHistogram } from './indicators/getHistogram'
 import { getALMA } from './indicators/getALMA'
+import { getALMACross } from './indicators/getALMACross'
 import { getMACDCross } from './indicators/getMACDCross'
 import { getTrend } from './indicators/getTrend'
 import { getRSI } from './indicators/getRSI'
@@ -15,12 +16,12 @@ import { getCCICross } from './indicators/getCCICross'
 export default {
   getSMA, getEMA,
   getMACD, getSignal, getHistogram,
-  getALMA, getMACDCross, getRSI, getRSICross,
+  getALMA, getALMACross, getMACDCross, getRSI, getRSICross,
   getTP, getCCI, getCCICross, getTrend
 }
 export {
   getSMA, getEMA,
   getMACD, getSignal, getHistogram,
-  getALMA, getMACDCross, getRSI, getRSICross,
+  getALMA, getALMACross, getMACDCross, getRSI, getRSICross,
   getTP, getCCI, getCCICross, getTrend
 }
