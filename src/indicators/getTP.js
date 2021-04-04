@@ -1,7 +1,7 @@
-const getTP = (priceHist, priceKeys = ['price', 'high', 'low'], setKey = 'tp') => {
+const getTP = (priceHist, priceKeys = {c: 'close', h: 'high', l:'low'}, setKey = 'tp') => {
   for (let i = 0; i < priceHist.length; i++) {
-    let sum = parseFloat(priceHist[i][priceKeys[0]]) + parseFloat(priceHist[i][priceKeys[1]]) + parseFloat(priceHist[i][priceKeys[2]])
-    priceHist[i][setKey] = (sum / priceKeys.length).toFixed(6)
+    let sum = priceHist[i][priceKeys.c] + priceHist[i][priceKeys.h] + priceHist[i][priceKeys.l]
+    priceHist[i][setKey] = parseFloat((sum / 3).toFixed(6))
   }
   return priceHist
 }

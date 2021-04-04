@@ -1,23 +1,27 @@
 import { getMACD } from './getMACD'
 
-const getMACDCross = (priceHist, periods, priceKey = 'price') => {
-  let fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12
-  let slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26
-  let signalLength = periods.signalLength ? periods.signalLength : 9
+const getMACDCross = (priceHist, periods, priceKey = 'close') => {
+  if (!periods) {
+    periods = {
+      fastPeriod: 12,
+      slowPeriod: 26,
+      signalLength: 9
+    }
+  }
   let options = {
     includeSignal: true,
     includeHistogram: true
   }
 
   let isWithMACD = priceHist[0].hasOwnProperty('macd')
-  priceHist = !isWithMACD ? getMACD(priceHist, { fastPeriod, slowPeriod, signalLength }, priceKey, 'macd', options) : priceHist
+  priceHist = !isWithMACD ? getMACD(priceHist, { fastPeriod, slowPeriod, signalLength }, options, priceKey, 'macd') : priceHist
   
   let arr = []
   let cIdx = 0
 
   for (let i = 0; i < priceHist.length; i++) {
-    let a = parseFloat(priceHist[cIdx].macd) > parseFloat(priceHist[cIdx].signal)
-    let b = parseFloat(priceHist[i].macd) > parseFloat(priceHist[i].signal)
+    let a = priceHist[cIdx].macd > priceHist[cIdx].signal
+    let b = priceHist[i].macd > priceHist[i].signal
     if (!a != !b) {
       priceHist[i - cIdx - 1]['days'] = i - cIdx - 1
       arr.push(priceHist[i - cIdx - 1])

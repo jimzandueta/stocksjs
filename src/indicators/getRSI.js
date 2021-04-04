@@ -1,4 +1,4 @@
-const getRSI = (priceHist, period = 14, changeKey = 'change', setKey = 'rsi') => {
+const getRSI = (priceHist, period = 14, changeKey = 'changeVal', setKey = 'rsi') => {
   for (let i = priceHist.length - 1; i >= 0; i--) {
 
     let gArr = []
@@ -10,7 +10,7 @@ const getRSI = (priceHist, period = 14, changeKey = 'change', setKey = 'rsi') =>
 
     if (i <= priceHist.length - 1 - period) {
       for (let j = i; j < i + period; j++) {
-        let change = parseFloat(priceHist[j][changeKey])
+        let change = priceHist[j][changeKey]
         change >= 0 ? gArr.push(change) : gArr.push(0)
         change < 0 ? lArr.push(Math.abs(change)) : lArr.push(0)
       }
@@ -29,11 +29,11 @@ const getRSI = (priceHist, period = 14, changeKey = 'change', setKey = 'rsi') =>
     } else {
       priceHist[i]['gAve'] = 0
       priceHist[i]['lAve'] = 0
-      priceHist[i][`${setKey}${period}`] = (0).toFixed(2)
+      priceHist[i][`${setKey}${period}`] = 0
     }
     priceHist[i]['gAve'] = gAve
     priceHist[i]['lAve'] = lAve
-    priceHist[i][`${setKey}${period}`] = (100 - (100 / (1 + (gAve / lAve)))).toFixed(4)
+    priceHist[i][`${setKey}${period}`] = parseFloat((100 - (100 / (1 + (gAve / lAve)))).toFixed(4))
   }
   return priceHist
 }

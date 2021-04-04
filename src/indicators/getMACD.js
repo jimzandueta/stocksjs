@@ -2,7 +2,7 @@ import { getEMA } from './getEMA'
 import { getSignal } from './getSignal'
 import { getHistogram } from './getHistogram'
 
-const getMACD = (priceHist, periods, priceKey = 'price', setKey = 'macd', options) => {
+const getMACD = (priceHist, periods, options, priceKey = 'close', setKey = 'macd') => {
   let fastPeriod = periods.fastPeriod ? periods.fastPeriod : 12
   let slowPeriod = periods.slowPeriod ? periods.slowPeriod : 26
   let signalLength = periods.signalLength ? periods.signalLength : 9
@@ -15,9 +15,9 @@ const getMACD = (priceHist, periods, priceKey = 'price', setKey = 'macd', option
 
   for (let i = 0; i < priceHist.length; i++) {
     if (i < priceHist.length - slowPeriod - 1) {
-      priceHist[i][setKey] = parseFloat(priceHist[i][`ema${fastPeriod}`] - priceHist[i][`ema${slowPeriod}`]).toFixed(6)
+      priceHist[i][setKey] = parseFloat((priceHist[i][`ema${fastPeriod}`] - priceHist[i][`ema${slowPeriod}`]).toFixed(6))
     } else {
-      priceHist[i][setKey] = (0).toFixed(6)
+      priceHist[i][setKey] = 0
     }
 
     if (!isWithEMAFast) delete priceHist[i][`ema${fastPeriod}`]

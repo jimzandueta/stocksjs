@@ -12,16 +12,24 @@ import { getRSICross } from './indicators/getRSICross'
 import { getTP } from './indicators/getTP'
 import { getCCI } from './indicators/getCCI'
 import { getCCICross } from './indicators/getCCICross'
+import { getWEMA } from './indicators/getWEMA'
+import { getADX } from './indicators/getADX'
+import { getPivotT } from './indicators/getPivotT'
+import { getFibRL } from './indicators/getFibRL'
+import { getTR } from './indicators/getTR'
+import { getDM } from './indicators/getDM'
 
 export default {
   getSMA, getEMA,
   getMACD, getSignal, getHistogram,
   getALMA, getALMACross, getMACDCross, getRSI, getRSICross,
-  getTP, getCCI, getCCICross, getTrend
+  getTP, getCCI, getCCICross, getTrend,
+  getWEMA, getADX, getPivotT, getFibRL, getTR, getDM
 }
 export {
   getSMA, getEMA,
   getMACD, getSignal, getHistogram,
   getALMA, getALMACross, getMACDCross, getRSI, getRSICross,
-  getTP, getCCI, getCCICross, getTrend
+  getTP, getCCI, getCCICross, getTrend,
+  getWEMA, getADX, getPivotT, getFibRL, getTR, getDM
 }

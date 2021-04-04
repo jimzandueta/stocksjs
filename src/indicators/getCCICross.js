@@ -1,6 +1,6 @@
 import { getCCI } from './getCCI'
 
-const getCCICross = (priceHist, period = 20, constant = 0.015, priceKeys = ['price', 'high', 'low'], limit = 100) => {
+const getCCICross = (priceHist, limit = 100, period = 20, constant = 0.015, priceKeys = {c: 'close', h: 'high', l:'low'}) => {
   let isWithCCI = priceHist[0].hasOwnProperty('cci')
 
   priceHist = !isWithCCI ? getCCI(priceHist, period, constant, priceKeys) : priceHist
@@ -9,10 +9,10 @@ const getCCICross = (priceHist, period = 20, constant = 0.015, priceKeys = ['pri
   let cIdx = 0
 
   for (let i = 0; i < priceHist.length; i++) {
-    let a = parseFloat(priceHist[cIdx]['cci']) >= limit
-    let b = parseFloat(priceHist[cIdx]['cci']) < limit
-    let c = parseFloat(priceHist[i]['cci']) >= limit
-    let d = parseFloat(priceHist[i]['cci']) < limit
+    let a = priceHist[cIdx]['cci'] >= limit
+    let b = priceHist[cIdx]['cci'] < limit
+    let c = priceHist[i]['cci'] >= limit
+    let d = priceHist[i]['cci'] < limit
 
     if (a && d) {
       priceHist[cIdx]['days'] = cIdx

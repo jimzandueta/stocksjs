@@ -1,3 +1,4 @@
+
 const getTrend = (priceHist, key, start = 0, end, isVector = false) => {
   const diff = {
     increasing: [],
@@ -7,7 +8,7 @@ const getTrend = (priceHist, key, start = 0, end, isVector = false) => {
   let arr = priceHist.slice(start, end).reverse()
   arr.map((item, index, array) => {
     if (index > 0) {
-      let difference = parseFloat(item[key] - array[index - 1][key])
+      let difference = item[key] - array[index - 1][key]
       difference = isVector ? Math.abs(difference) : difference
 
       if (difference === 0) diff.equals.push(difference)

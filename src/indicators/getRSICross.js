@@ -1,6 +1,6 @@
 import { getRSI } from './getRSI'
 
-const getRSICross = (priceHist, period = 14, changeKey = 'change', limits = [50, 55]) => {
+const getRSICross = (priceHist, limits = [50, 55], period = 14, changeKey = 'changeVal') => {
   let isWithRSI = priceHist[0].hasOwnProperty(`rsi${period}`)
 
   priceHist = !isWithRSI ? getRSI(priceHist, period, changeKey) : priceHist
@@ -9,12 +9,12 @@ const getRSICross = (priceHist, period = 14, changeKey = 'change', limits = [50,
   let cIdx = 0
 
   for (let i = 0; i < priceHist.length; i++) {
-    let a = parseFloat(priceHist[cIdx][`rsi${period}`]) >= limits[1]
-    let b = parseFloat(priceHist[cIdx][`rsi${period}`]) >= limits[0] && parseFloat(priceHist[cIdx][`rsi${period}`]) < limits[1]
-    let c = parseFloat(priceHist[cIdx][`rsi${period}`]) < limits[0] 
-    let d = parseFloat(priceHist[i][`rsi${period}`]) >= limits[1]
-    let e = parseFloat(priceHist[i][`rsi${period}`]) >= limits[0] && parseFloat(priceHist[i][`rsi${period}`]) < limits[1]
-    let f = parseFloat(priceHist[i][`rsi${period}`]) < limits[0] 
+    let a = priceHist[cIdx][`rsi${period}`] >= limits[1]
+    let b = priceHist[cIdx][`rsi${period}`] >= limits[0] && priceHist[cIdx][`rsi${period}`] < limits[1]
+    let c = priceHist[cIdx][`rsi${period}`] < limits[0] 
+    let d = priceHist[i][`rsi${period}`] >= limits[1]
+    let e = priceHist[i][`rsi${period}`] >= limits[0] && priceHist[i][`rsi${period}`] < limits[1]
+    let f = priceHist[i][`rsi${period}`] < limits[0] 
 
     if ((a && (e || f)) || b && f) {
       priceHist[cIdx]['days'] = cIdx

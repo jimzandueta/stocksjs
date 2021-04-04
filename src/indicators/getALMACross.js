@@ -1,6 +1,6 @@
 import { getALMA } from './getALMA'
 
-const getALMACross = (priceHist, period = 9, sigma = 6.0, offset = 0.85, keyPrice = 'price') => {
+const getALMACross = (priceHist, period = 9, sigma = 6.0, offset = 0.85, keyPrice = 'close') => {
   let isWithALMA = priceHist[0].hasOwnProperty('alma')
 
   priceHist = !isWithALMA ? getALMA(priceHist, period, sigma, offset, keyPrice) : priceHist
@@ -9,10 +9,10 @@ const getALMACross = (priceHist, period = 9, sigma = 6.0, offset = 0.85, keyPric
   let cIdx = 0
 
   for (let i = 0; i < priceHist.length; i++) {
-    let a = parseFloat(priceHist[cIdx][keyPrice]) >= parseFloat(priceHist[cIdx]['alma'])
-    let b = parseFloat(priceHist[cIdx][keyPrice]) < parseFloat(priceHist[cIdx]['alma'])
-    let c = parseFloat(priceHist[i][keyPrice]) >= parseFloat(priceHist[i]['alma'])
-    let d = parseFloat(priceHist[i][keyPrice]) < parseFloat(priceHist[i]['alma'])
+    let a = priceHist[cIdx][keyPrice] >= priceHist[cIdx]['alma']
+    let b = priceHist[cIdx][keyPrice] < priceHist[cIdx]['alma']
+    let c = priceHist[i][keyPrice] >= priceHist[i]['alma']
+    let d = priceHist[i][keyPrice] < priceHist[i]['alma']
 
     if (a && d) {
       priceHist[cIdx]['days'] = cIdx
