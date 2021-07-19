@@ -18,18 +18,57 @@ import { getPivotT } from './indicators/getPivotT'
 import { getFibRL } from './indicators/getFibRL'
 import { getTR } from './indicators/getTR'
 import { getDM } from './indicators/getDM'
+import { getTRIX } from './indicators/getTRIX'
+import { getFisher } from './indicators/getFisher'
+import { getFisherCross } from './indicators/getFisherCross'
+
 
 export default {
-  getSMA, getEMA,
-  getMACD, getSignal, getHistogram,
-  getALMA, getALMACross, getMACDCross, getRSI, getRSICross,
-  getTP, getCCI, getCCICross, getTrend,
-  getWEMA, getADX, getPivotT, getFibRL, getTR, getDM
+    getSMA,
+    getEMA,
+    getMACD,
+    getSignal,
+    getHistogram,
+    getALMA,
+    getALMACross,
+    getMACDCross,
+    getRSI,
+    getRSICross,
+    getTP,
+    getCCI,
+    getCCICross,
+    getTrend,
+    getWEMA,
+    getADX,
+    getPivotT,
+    getFibRL,
+    getTR,
+    getDM,
+    getTRIX,
+    getFisher
 }
 export {
-  getSMA, getEMA,
-  getMACD, getSignal, getHistogram,
-  getALMA, getALMACross, getMACDCross, getRSI, getRSICross,
-  getTP, getCCI, getCCICross, getTrend,
-  getWEMA, getADX, getPivotT, getFibRL, getTR, getDM
+    getSMA,
+    getEMA,
+    getMACD,
+    getSignal,
+    getHistogram,
+    getALMA,
+    getALMACross,
+    getMACDCross,
+    getRSI,
+    getRSICross,
+    getTP,
+    getCCI,
+    getCCICross,
+    getTrend,
+    getWEMA,
+    getADX,
+    getPivotT,
+    getFibRL,
+    getTR,
+    getDM,
+    getTRIX,
+    getFisher,
+    getFisherCross
 }
