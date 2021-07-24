@@ -22,7 +22,7 @@ import { getTRIX } from './indicators/getTRIX'
 import { getFisher } from './indicators/getFisher'
 import { getFisherCross } from './indicators/getFisherCross'
 import { getSTS } from './indicators/getSTS'
-
+import { getWilliamsR } from './indicators/getWilliamsR'
 
 export default {
     getSMA,
@@ -47,7 +47,8 @@ export default {
     getDM,
     getTRIX,
     getFisher,
-    getSTS
+    getSTS,
+    getWilliamsR
 }
 export {
     getSMA,
@@ -73,5 +74,6 @@ export {
     getTRIX,
     getFisher,
     getFisherCross,
-    getSTS
+    getSTS,
+    getWilliamsR
 }
