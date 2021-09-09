@@ -23,7 +23,7 @@ const getMACDCross = (priceHist, periods, priceKey = 'close') => {
         let a = priceHist[cIdx].macd > priceHist[cIdx].signal
         let b = priceHist[i].macd > priceHist[i].signal
         if (!a != !b) {
-            priceHist[i - 1]['days'] = i - cIdx - 1
+            priceHist[i - 1]['days'] = i - cIdx
             arr.push(priceHist[i - 1])
             cIdx = i
         }
